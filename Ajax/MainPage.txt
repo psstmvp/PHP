@@ -1,0 +1,22 @@
+onChange="fuctionName(this.value)"
+
+
+
+
+
+
+<script src="../Assets/JQ/jQuery.js"></script> 
+
+
+<script>
+    function fuctionName(parameter) 
+    {
+
+        $.ajax({
+        url:"../Assets/Ajaxpages/AjaxPageName.php?parameter="+parameter,
+        success: function(html){
+            $("#txt_changedName").html(html);
+        }
+        });
+    }
+</script>
