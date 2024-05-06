@@ -1,0 +1,29 @@
+if(isset($_POST['btnupload']))
+{
+    $photos=$_FILES['photos'];
+    for ($i = 0; $i < count($photos['name']); $i++) {
+        $photoName = $photos['name'][$i];
+        $photoTmpName = $photos['tmp_name'][$i];
+        move_uploaded_file($photoTmpName, 'Assets/Files/'.$photoName);
+        $query = "INSERT INTO tbl_gallery (gallery_file) VALUES ('$photoName')";
+        if($conn->query($query))
+        {
+            $flag++;
+        }
+    }
+    if($flag==$i)
+    {
+        echo '<script>alert("Upload Successfull");</script>';
+    }
+    else{
+        ?>
+        <script>alert("Only <?php echo $flag ?> Uploaded. Remaining Failed!");</script>'
+        <?php
+    }
+}
+?>
+
+<form action="" enctype="multipart/form-data" method="post">
+                <input type="file" multiple name="photos[]" required/>
+                <input type="submit" value="Upload" name="btnupload">
+            </form>
