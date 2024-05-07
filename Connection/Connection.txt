@@ -1,0 +1,19 @@
+<?php
+
+// Database connection parameters
+$ServerName = "localhost"; // Server where the MySQL database is hosted
+$Username = "root"; // Username to access the MySQL database
+$Password = ""; // Password to access the MySQL database (empty string here, assuming no password)
+$Database = "db_toolpool"; // Name of the MySQL database to connect to
+
+// Establishing connection to the MySQL database
+$conn = mysqli_connect($ServerName, $Username, $Password, $Database);
+
+// Checking if the connection is successful
+if (!$conn) {
+    // If connection fails, terminate the script and display an error message
+    die("Connection Failed: " . mysqli_connect_error());
+}
+
+// If the connection is successful, code execution continues below this point
+?>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&family=Montserrat:wght@600&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: #686868;
+  display: flex;
+justify-content: center;
+}
+
+.credit-card-form {
+  margin-top: 4%;
+  max-width: 400px;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(255, 255, 255, 0.1);
+  font-family: 'Montserrat', sans-serif;
+  background-color: #dbdbdb;
+  text-align: center;
+  color: #424242;
+  align-content: center;
+}
+
+.credit-card-form h2 {
+  margin-bottom: 10%;
+  font-size: 24px;
+}
+
+.credit-card-form .form-group {
+  margin-bottom: 15px;
+
+}
+
+.credit-card-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #777;
+}
+
+.credit-card-form input[type="text"],
+.credit-card-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.credit-card-form .form-row {
+  display: flex;
+}
+
+
+.credit-card-form button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background-color: #585858;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.credit-card-form button[type="submit"]:hover {
+  background-color: #808080;
+  color: #424242;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0px 6px 10px rgba(255, 255, 255, 0.1);
+}
+
+.credit-card-form button[type="submit"]:focus {
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
+  color: white;
+  margin-top: 6%;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-bottom: 45px;
+  font-size: 70%;
+  text-shadow: 0 0 5px #cacaca; 
+}
+
+.Image1 {
+  margin-top: 0;
+  width: 220px;
+}
+.h2 {
+  margin: 0px;
+}
+  </style>
+</head>
+<body>
+    <div class="credit-card-form" x-data="{
+        fields: {
+          cardnumber: '',
+          cardholder: '',
+          exp: '',
+          cvc: ''
+        },
+        valid: false,
+        formatCardNumber(number) {
+          return number.replace(/[^0-9]/gi, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+        },
+        formatExp(number) {
+          return number.replace(/[^0-9]/gi, '').slice(0, 4).replace(/(.{2})/, '$1\/').trim();
+        },
+        validate() {
+          const validCardNumber = this.fields.cardnumber.length === 16;
+          const validCardholder = this.fields.cardholder.trim() !== '';
+          const validExp = this.fields.exp.length === 4;
+          const validCVC = this.fields.cvc.length === 3; // Assuming CVV is 3 characters long
+    
+          this.valid = validCardNumber && validCardholder && validExp && validCVC;
+        }
+      }">
+    
+      <h2>PAYMENT PORTAL</h2>
+      <img class="Image1" src="https://i.ibb.co/hgJ7z3J/6375aad33dbabc9c424b5713-card-mockup-01.png" alt="6375aad33dbabc9c424b5713-card-mockup-01" border="0"></a>
+      <form @submit.prevent="showLoading($event, this)">
+        <div class="form-group">
+          <label for="card-number">Card Number</label>
+          <input type="text" id="card-number" placeholder="Card number" x-model="fields.cardnumber" @keydown="if (fields.cardnumber.length > 18 && $event.keyCode != 8 && $event.keyCode != 9 && $event.keyCode != 46) { $event.preventDefault(); }" @input="fields.cardnumber = formatCardNumber(fields.cardnumber)">
+        </div>
+        <div class="form-group">
+          <label for="card-holder">Card Holder</label>
+          <input type="text" id="card-holder" placeholder="Card holder's name" x-model="fields.cardholder">
+        </div>
+        <div class="form-row">
+          <div class="form-group form-column">
+            <label for="expiry-date">Expiry Date</label>
+            <input type="text" id="expiry-date" placeholder="MM/YY" x-model="fields.exp" @keydown="if (fields.exp.length > 4 && $event.keyCode != 8 && $event.keyCode != 9 && $event.keyCode != 46) { $event.preventDefault(); }" @input="fields.exp = formatExp(fields.exp)">
+          </div>
+          <div class="form-group form-column">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="CVV" maxlength="3" pattern="[0-9]*" title="Please enter only numeric digits" x-model="fields.cvc" @keydown="if (!/^\d$/.test(event.key) && event.keyCode !== 8 && event.keyCode !== 9) { event.preventDefault(); }">
+        </div>
+        </div>
+        <button type="submit" class="click-button" x-bind:disabled="!valid">PAY NOW - $(TOTAL)</button>
+      </form>
+    </div>
+  </body>
+<script>
+    function showLoading(event, button) {
+  event.preventDefault(); // Prevent form submission
+
+  button.innerHTML = "Processing Payment...";
+
+  setTimeout(function() {
+    button.innerHTML = "Payment completed.";
+  }, 3000); // Change to the desired duration in milliseconds
+}
+</script>
+</html>

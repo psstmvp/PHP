@@ -1,7 +1,7 @@
-$photo=$_FILES['fle_photo']['name'];
-$tempphoto=$_FILES['fle_photo']['tmp_name'];
-move_uploaded_file($tempphoto, '../Assets/Files/User/Photo/'.$photo);
+$photo=$_FILES['fle_photo']['name']; // Retrieve the name of the uploaded file
+$tempphoto=$_FILES['fle_photo']['tmp_name']; // Retrieve the temporary file path of the uploaded file
+move_uploaded_file($tempphoto, '../Assets/Files/User/Photo/'.$photo); // Move the uploaded file to a destination directory
 
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="fle_photo" id="fle_photo" />
+    <input type="file" name="fle_photo" id="fle_photo" /> <!-- File input field for uploading the photo -->
 </form>
