@@ -1,0 +1,15 @@
+<?php
+include('../Assets/Connection/Connection.php');
+if(isset($_POST['btn_save']))
+{
+	$district=$_POST['txt_district'];
+	$insQry="insert into tbl_district(district_name) values('$district')";
+	if($conn->query($insQry))
+	{
+		echo "Inserted";
+	}
+	else{
+		echo "Failed";
+	}
+}
+?>

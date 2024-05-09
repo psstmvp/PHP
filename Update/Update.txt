@@ -1,0 +1,23 @@
+<?php
+    include("../Assets/Connection/connection.php");
+    if(isset($_POST["btn_submit"]))
+    {
+        $update = "update tbl_district set district_name='".$_POST["txtdis"]."' where district_id='".$_POST["txt_update"]."'";
+        $con->query($update);
+        header("location:District.php");
+    }
+
+
+ //Updation Code
+    $ename = "";
+    $eid = "";
+    if(isset($_GET["edit"]))
+    {
+        $selquery1 = "select * from tbl_district where district_id='".$_GET["edit"]."'";
+        $row1 = $con->query($selquery1);
+        $data1 = $row1->fetch_assoc(); 
+        $ename = $data1["district_name"];
+        $eid = $data1["district_id"];
+    }   
+
+?>

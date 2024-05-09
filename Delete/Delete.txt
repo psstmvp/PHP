@@ -1,0 +1,12 @@
+if(isset($_GET['did']))
+{
+	$delQry="delete from tbl_district where district_id=".$_GET['did'];
+		if($conn->query($delQry))
+		{
+			echo "";
+		}
+		else 
+		{
+			echo "failed";
+		}
+}

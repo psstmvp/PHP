@@ -1,0 +1,63 @@
+<?php
+include("../Assets/connection/connection.php");
+session_start();
+if(isset($_POST['btnlogin']))
+{
+	$email=$_POST["txtemail"];
+	$password=$_POST["txtpassword"];
+	$selUser="select * from tbl_user where user_email='".$email."' and user_password='".$password."'";
+	$seladmin="select * from tbl_admin where admin_email='".$email."' and admin_password='".$password."'";
+	$selchef="select * from tbl_chef where chef_email='".$email."' and chef_password='".$password."'";
+	//AdminQuery
+	//chef
+	$resUser=$conn->query($selUser);
+	$resadmin=$conn->query($seladmin);
+	$reschef=$conn->query($selchef);
+	if($resUser->num_rows>0)
+	{
+		$row=$resUser->fetch_assoc();
+		$_SESSION['uid']=$row['user_id'];
+		$_SESSION['uname']=$row['user_name'];
+		header("location: ../User/Homepage.php");
+	}
+	else if($resadmin->num_rows>0)
+	{
+		$row=$resadmin->fetch_assoc();
+		$_SESSION['aid']=$row['admin_id'];
+		$_SESSION['adname']=$row['admin_name'];
+		header("location: ../Admin/Homepage.php");
+		//Admin Connection
+	}
+	else if($reschef->num_rows>0)
+	{
+		$row=$reschef->fetch_assoc();
+		if($row['chef_vstatus']==0)
+		{
+			?>
+			<script>
+			alert('Not Verified By Admin')
+			</script>
+			<?php
+		}
+		else if($row['chef_vstatus']==1)
+		{		
+			$_SESSION['cid']=$row['chef_id'];
+			$_SESSION['cname']=$row['chef_name'];
+			header("location: ../chef/Homepage.php");
+		}
+		else
+		{
+			?>
+			<script>
+			alert(' Rejected By Admin')
+			</script>
+			<?php
+		}
+	}
+	else
+	{
+		echo "Invalid Credentials";
+	}
+}
+
+?>

@@ -1,0 +1,15 @@
+ <?php
+            $selQry = 'select * from tbl_district';
+            $result = $conn->query($selQry);
+            $i = 0;
+            while ($row = $result->fetch_assoc()) {
+                $i++;
+                ?>
+                <tr>
+                    <td><?php echo $i ?></td>
+                    <td><?php echo $row['district_name'] ?></td>
+                    <td><a href="District.php?did=<?php echo $row['district_id'] ?>" class="btn btn-danger">Delete</a></td>
+                </tr>
+                <?php
+            }
+            ?>
